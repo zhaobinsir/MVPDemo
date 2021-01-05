@@ -1,5 +1,7 @@
 package test.mondule.com.mvpdemo.maincontract;
 
+import androidx.lifecycle.LifecycleObserver;
+
 import test.mondule.com.mvpdemo.CallBack;
 import test.mondule.com.mvpdemo.base.BaseModel;
 import test.mondule.com.mvpdemo.base.BasePresenter;
@@ -19,6 +21,9 @@ public interface LoginContract {
     }
 
     interface IPresenter extends BasePresenter {
+
         void login();
+        //生命周期观察者
+        LifecycleObserver getLifeObserver();
     }
 }

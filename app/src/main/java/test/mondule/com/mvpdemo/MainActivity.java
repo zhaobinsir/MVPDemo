@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements LoginContract.IVi
             }
         });
         new LoginPresenterImpl(this);
+        getLifecycle().addObserver(presenter.getLifeObserver());
     }
 
     @Override
@@ -38,5 +39,11 @@ public class MainActivity extends AppCompatActivity implements LoginContract.IVi
     @Override
     public boolean isAlive() {
         return !isFinishing();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getLifecycle().removeObserver(presenter.getLifeObserver());
     }
 }
