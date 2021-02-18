@@ -6,6 +6,4 @@ package test.mondule.com.mvpdemo.base;
 public interface BaseView<P extends BasePresenter> {
     //绑定监听
     void setPresenter(P presenter);
-    //是否可见
-    boolean isAlive();
 }

@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements LoginContract.IVi
             }
         });
         new LoginPresenterImpl(this);
+        presenter.bindLifeCycle(getLifecycle());
         getLifecycle().addObserver(presenter.getLifeObserver());
     }
 
@@ -34,11 +35,6 @@ public class MainActivity extends AppCompatActivity implements LoginContract.IVi
     @Override
     public void showToast(String msg) {
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean isAlive() {
-        return !isFinishing();
     }
 
     @Override

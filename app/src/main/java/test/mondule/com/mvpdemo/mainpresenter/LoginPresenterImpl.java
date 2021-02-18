@@ -1,14 +1,17 @@
 package test.mondule.com.mvpdemo.mainpresenter;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 
 import java.lang.ref.WeakReference;
 
 import test.mondule.com.mvpdemo.CallBack;
+import test.mondule.com.mvpdemo.MainActivity;
 import test.mondule.com.mvpdemo.base.BaseView;
 import test.mondule.com.mvpdemo.maincontract.LoginContract;
 import test.mondule.com.mvpdemo.mainmodel.LoginModelImpl;
@@ -24,10 +27,13 @@ public class LoginPresenterImpl<V extends BaseView> implements LoginContract.IPr
 
     private LifeController lifeController;
 
+    private Lifecycle lifeCycle;
+
     public LoginPresenterImpl(V view) {
         viewReference = new WeakReference(view);
         view.setPresenter(this);
         model=new LoginModelImpl();
+        lifeCycle= ((MainActivity)view).getLifecycle();
     }
 
     private LoginContract.IView getIView(){
@@ -51,9 +57,12 @@ public class LoginPresenterImpl<V extends BaseView> implements LoginContract.IPr
             });
         }
     }
-    /**
-     * 注册观察者
-     * */
+
+
+    private boolean isAlive(){
+        return lifeCycle.getCurrentState()!= Lifecycle.State.DESTROYED;
+    }
+
     @Override
     public LifecycleObserver getLifeObserver() {
         if (lifeController==null) {
@@ -62,8 +71,9 @@ public class LoginPresenterImpl<V extends BaseView> implements LoginContract.IPr
         return lifeController;
     }
 
-    private boolean isAlive(){
-        return viewReference.get()!=null&&viewReference.get().isAlive();
+    @Override
+    public Lifecycle bindLifeCycle(Lifecycle lifecycle) {
+        return lifecycle;
     }
 
     /*public void detachView(){

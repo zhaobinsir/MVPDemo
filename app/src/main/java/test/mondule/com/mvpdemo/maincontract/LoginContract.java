@@ -23,7 +23,6 @@ public interface LoginContract {
     interface IPresenter extends BasePresenter {
 
         void login();
-        //生命周期观察者
-        LifecycleObserver getLifeObserver();
+
     }
 }
